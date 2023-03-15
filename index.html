@@ -4,25 +4,38 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Mapas</title>
-    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="./view/style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
-  </head>
-  <body>
-    <h1 class="titulo bg-danger text-light">Mapa</h1>
-    <section class="container boton">
-        <select class="btn btn-outline-danger" name="" id="">
-            <option select value="">Seleccione una sede</option>
-            <option value="">Gloriosa tecno(combativa)</option>
-            <option value="">La 40</option>
-            <option value="">Macarena</option>
-            <option value="">Vivero</option>
-            <option value="">Porvenir</option>
-            <option value="">Asab</option>
-        </select>
-    </section>
-    <section class="map"></section>
-
+    <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AtzDh5axnUWYRw6zOgK5nqnd7S2C_f8Yij3gDZiRtTtmvleWFq01t5OX7YogblQi'></script>
+    <script src="./view/app/app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </head>
+  <body  onload="GetMap(4.579561842518199 , -74.15756434620194,11);">
+    <section class="header">
+      <h1 class="titulo bg-danger text-light">Mapa</h1>
+      <div class="imagenHeader opacity-50">
+        <img class="imgH" src="./view/img/fototecno.jpg" alt="Logo">
+        <img class="imgH" src="./view/img/fototecno.jpg" alt="Logo">
+      </div>
+    </section>
+    <section class="mapas container">
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+          <button type="button" onclick="GetMap(4.579561842518199, -74.15756434620194,17);" class="btn btn-outline-danger">Tecnologica</button>
+          <button type="button" onclick="GetMap(4.628253905986502, -74.06543145964815,17);" class="btn btn-outline-danger">La 40</button>
+          <button type="button" onclick="GetMap(4.613461006109428, -74.06469022278243,17);" class="btn btn-outline-danger">Macarena</button>
+          <button type="button" onclick="GetMap(4.597221679621991, -74.06459963085757,17);" class="btn btn-outline-danger">Vivero</button>
+          <button type="button" onclick="GetMap(4.638193858844783, -74.18616088852973,17);" class="btn btn-outline-danger">Porvenir</button>
+          <button type="button" onclick="GetMap(4.605211532854522, -74.08014224434929,17);" class="btn btn-outline-danger">Asab</button>
+        </div>
+         <div class="border border-2 border-opacity-50 border-bottom border-dark rounded " id="myMap"></div>
+    </section>
+    <footer class="bg-danger">
+      <ul class=" list-group list-group-horizontal">
+        <li class="listaFooter"><i class="bi bi-facebook text-light"></i></a></li>
+        <li class="listaFooter"><i class="bi bi-twitter text-light"></i></a></li>
+        <li class="listaFooter"><i class="bi bi-instagram text-light"></i></a></li>
+      </ul>
+    </footer>
   </body>
 </html>
