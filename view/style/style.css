@@ -1,3 +1,42 @@
 .titulo{
+    margin: 0;
     padding-left: 1.5rem;
+    padding-bottom: 5px;
+}
+.imagenHeader{
+    display: flex;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+.imgH{
+    width: 50%;
+    height: calc(20vh - 7rem);
+    object-fit: cover;
+}
+.mapas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.mapas>div{
+    margin: 1rem;
+}
+#myMap {
+    position: relative;
+    width: calc(90vw - 50%);
+    height: 400px;
+    margin: 0 auto;
+}
+footer{
+    padding: 1rem;
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.listaFooter{
+    margin: 0 1rem;
+    list-style: none;
 }
