@@ -29,6 +29,16 @@
     height: 400px;
     margin: 0 auto;
 }
+body
+{
+    background-image: url("https://pbs.twimg.com/media/EyecHaUWEAIihjd.jpg:large");
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+.btn-group{
+    background-color: azure;
+}
 footer{
     padding: 1rem;
     margin-top: 1rem;
