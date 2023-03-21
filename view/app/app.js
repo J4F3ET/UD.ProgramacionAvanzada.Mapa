@@ -4,31 +4,31 @@ function updateMap(sede) {
 		case 1:
 			GetMap(4.579561842518199, -74.15756434620194, 17);
 			document.body.style.backgroundImage =
-				"url('./view/img/tecnologica.jpg')";
+				"url('./view/img/tecnologica.png')";
 			break;
 		case 2:
 			GetMap(4.628253905986502, -74.06543145964815, 17);
-			document.body.style.backgroundImage = "url('./view/img/sede40.jpg')";
+			document.body.style.backgroundImage = "url('./view/img/sede40.png')";
 			break;
 		case 3:
 			GetMap(4.613461006109428, -74.06469022278243, 17);
 			document.body.style.backgroundImage =
-				"url('./view/img/macarena.jfif')";
+				"url('./view/img/macarena.png')";
 			break;
 		case 4:
 			GetMap(4.597221679621991, -74.06459963085757, 17);
 			document.body.style.backgroundImage =
-				"url('./view/img/vivero.jpg')";
+				"url('./view/img/vivero.png')";
 			break;
 		case 5:
 			GetMap(4.638193858844783, -74.18616088852973, 17);
 			document.body.style.backgroundImage =
-				"url('./view/img/porvenir.jpg')";
+				"url('./view/img/porvenir.png')";
 			break;
 		case 6:
 			GetMap(4.605211532854522, -74.08014224434929, 17);
 			document.body.style.backgroundImage =
-				"url('./view/img/ASAB.jfif')";
+				"url('./view/img/ASAB.png')";
 			break;
 		default:
 			GetMap(4.579561842518199, -74.15756434620194, 11);	

@@ -1,6 +1,6 @@
 body{
-    background:  center top no-repeat;
-    background-image: url("../img/bogota.jpg" );
+    background:  center bottom no-repeat;
+    background-image: url("../img/bogota.png" );
     background-size: cover;
 }
 .titulo{
@@ -20,7 +20,7 @@ body{
 #myMap {
     position: relative;
     width: calc(90vw - 50%);
-    height: 400px;
+    height: 52.5    rem;
     margin: 0 auto;
 }
 footer{
