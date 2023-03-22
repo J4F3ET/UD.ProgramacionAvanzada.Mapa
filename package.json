@@ -1,0 +1,28 @@
+{
+  "name": "ud.proramacionavanzada.mapasjavascript",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "nodemon ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/J4F3ET/UD.ProgramacionAvanzada.Mapa.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/J4F3ET/UD.ProgramacionAvanzada.Mapa/issues"
+  },
+  "homepage": "https://github.com/J4F3ET/UD.ProgramacionAvanzada.Mapa#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.0-alpha1",
+    "bootstrap-icons": "^1.10.3",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22",
+    "proj4": "^2.9.0"
+  }
+}
