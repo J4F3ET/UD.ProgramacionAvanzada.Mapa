@@ -40,24 +40,66 @@ function updateMap(sede) {
 			document.body.style.backgroundImage =
 				"url('./view/img/ASAB.png')";
 			break;
+		case 7:
+			GetMap(4.579561842518199, -74.15756434620194, 17,'Facultad Teconológica Colegios');
+			document.body.style.backgroundImage =
+				"url('./view/img/tecnologica.png')";
+			break;
 		default:
 			GetMap(4.7078228876322425, -74.0727965182916, 11, "Bogotá");	
 	}
 }; 
-function GetMap(cordenada1, cordenada2,acercamiento, titulo) {
+function GetMap(cordenada1, cordenada2, acercamiento, titulo) {
+	var loc = new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089);
 	var map = new Microsoft.Maps.Map("#myMap", {
-		center: new Microsoft.Maps.Location(cordenada1, cordenada2),
+		credentials:
+			"AtzDh5axnUWYRw6zOgK5nqnd7S2C_f8Yij3gDZiRtTtmvleWFq01t5OX7YogblQi",
+		center: loc,
 		zoom: acercamiento,
 	});
-	if(titulo == 'Bogotá'){return}
-	var pushpin = new Microsoft.Maps.Pushpin(
-		new Microsoft.Maps.Location(cordenada1, cordenada2),
-		{
-			title: titulo,
-			subTitle: "Bogotá",
-			color: "red",
-		}
-	);
-
+	if (titulo == "Bogotá") {return;}
+	var pushpin = new Microsoft.Maps.Pushpin(loc, {
+		title: titulo,
+		subTitle: "Bogotá",
+		color: "red",
+	});
 	map.entities.push(pushpin);
 }
+
+function maps() {
+	var map;
+	map = new Microsoft.Maps.Map("#myMap", {
+		credentials:
+			"AtzDh5axnUWYRw6zOgK5nqnd7S2C_f8Yij3gDZiRtTtmvleWFq01t5OX7YogblQi",
+		center: new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089),
+		zoom: 12,
+	});
+
+	//Load the spatial math module
+	Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", function () {
+		//Create a circle with a given radius around the center location
+		var center = map.getCenter();
+		var radius = 5000; // en metros
+		var vertices = 100; // número de lados del polígono
+		var path = Microsoft.Maps.SpatialMath.getRegularPolygon(
+			center,
+			radius,
+			vertices,
+			Microsoft.Maps.SpatialMath.Meters
+		);
+		var poly = new Microsoft.Maps.Polygon(path, {
+			fillColor: new Microsoft.Maps.Color(100, 0, 102, 204),
+			strokeColor: new Microsoft.Maps.Color(200, 0, 51, 153),
+			strokeThickness: 2,
+		});
+
+		map.entities.push(poly);
+
+		//Add a pushpin at the center location.
+		var pin = new Microsoft.Maps.Pushpin(center);
+		map.entities.push(pin);
+	});
+}
+
+
+
