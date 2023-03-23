@@ -82,8 +82,15 @@ function puntos() {
 	map.entities.push(pushpin);
 };
 function maps() {
+	proj4.defs(
+		"EPSG:3857",
+		"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs"
+	);
+	proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
 	//Carga el modulo para crear un poligono de 5 km de radio alrededor del centro del mapa
 	Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", async function () {
+		const listaColegios = document.querySelector("#lista_colegios");
+		listaColegios.setAttribute("hidden", false);
 		var path = Microsoft.Maps.SpatialMath.getRegularPolygon(
 			new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089), //centro
 			5, //radio en metros
@@ -97,20 +104,6 @@ function maps() {
 		});
 		//agrega el poligono al mapa
 		map.entities.push(poly);
-
-		//agrega un pushpin(punto) al centro del mapa
-		var pin = new Microsoft.Maps.Pushpin(
-			new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089)
-		);
-		map.entities.push(pin);
-
-		proj4.defs(
-			"EPSG:3857",
-			"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs"
-		);
-		proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
-
-
 		try {
 			// Obtener los datos de los colegios del la siguiente pagina
 			// Obtener los datos de los colegios del la siguiente pagina
@@ -119,23 +112,46 @@ function maps() {
 			);
 			const data = await response.json();
 			const coordinates = [];
-			data.features.forEach((element) =>
-				element.geometry.coordinates=proj4("EPSG:3857", "EPSG:4326", element.geometry.coordinates)
+			data.features.forEach(
+				(element) =>
+					(element.geometry.coordinates = proj4(
+						"EPSG:3857",
+						"EPSG:4326",
+						element.geometry.coordinates
+					))
 			);
 			data.features.forEach((element) => {
 				const location = new Microsoft.Maps.Location(
 					element.geometry.coordinates[1],
 					element.geometry.coordinates[0]
 				);
-				const pin = new Microsoft.Maps.Pushpin(location);
-				map.entities.push(pin);
 				if (Microsoft.Maps.SpatialMath.Geometry.intersects(location, poly)) {
+					const pin = new Microsoft.Maps.Pushpin(location);
+					map.entities.push(pin);
+					document.querySelector;
 				}
 			});
 		} catch (err) {
 			console.log(err);
 		}
-		
+		map.setView({
+			zoom: 13,
+			center: new Microsoft.Maps.Location(
+				4.579474508287231,
+				-74.15752865417089
+			),
+			animate: true,
+		});
+	});
+	//agrega un pushpin(punto) en la tecno
+	var pin = new Microsoft.Maps.Pushpin(
+		new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089)
+	);
+	map.entities.push(pin);
+	map.setView({
+		zoom: 13,
+		center: new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089),
+		animate: true,
 	});
 }
 /*					
