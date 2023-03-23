@@ -1,6 +1,6 @@
 
 
-document.addEventListener("DOMContentLoaded", () => maps());
+var map;
 function updateMap(sede) {
 	const a = document.body.style.backgroundImage;
 	switch (sede) {
@@ -62,13 +62,15 @@ function updateMap(sede) {
 	}
 }
 function GetMap(cordenada1, cordenada2, acercamiento, titulo) {
-	var loc = new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089);
-	var map = new Microsoft.Maps.Map("#myMap", {
+	var loc = (map = new Microsoft.Maps.Map("#myMap", {
 		credentials:
 			"AtzDh5axnUWYRw6zOgK5nqnd7S2C_f8Yij3gDZiRtTtmvleWFq01t5OX7YogblQi",
-		center: loc,
+		center: new Microsoft.Maps.Location(4.60971, -74.08175),
 		zoom: acercamiento,
-	});
+	}));
+	
+}
+function puntos() {
 	if (titulo == "Bogotá") {
 		return;
 	}
@@ -78,25 +80,16 @@ function GetMap(cordenada1, cordenada2, acercamiento, titulo) {
 		color: "red",
 	});
 	map.entities.push(pushpin);
-}
-
+};
 function maps() {
-	var map;
-	map = new Microsoft.Maps.Map("#myMap", {
-		credentials:
-			"AtzDh5axnUWYRw6zOgK5nqnd7S2C_f8Yij3gDZiRtTtmvleWFq01t5OX7YogblQi",
-		center: new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089),
-		zoom: 12,
-	});
 	//Carga el modulo para crear un poligono de 5 km de radio alrededor del centro del mapa
 	Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", async function () {
 		var path = Microsoft.Maps.SpatialMath.getRegularPolygon(
-			map.getCenter(), //centro
+			new Microsoft.Maps.Location(4.579474508287231, -74.15752865417089), //centro
 			5, //radio en metros
 			100, //numero de lados del poligono
 			Microsoft.Maps.SpatialMath.DistanceUnits.Kilometers
 		);
-
 		var poly = new Microsoft.Maps.Polygon(path, {
 			fillColor: new Microsoft.Maps.Color(100, 0, 102, 204),
 			strokeColor: new Microsoft.Maps.Color(200, 0, 51, 153),
@@ -111,16 +104,15 @@ function maps() {
 		);
 		map.entities.push(pin);
 
-		// Definir la proyección de EPSG:3857
 		proj4.defs(
 			"EPSG:3857",
 			"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs"
 		);
-
-		// Definir la proyección de EPSG:4326
 		proj4.defs("EPSG:4326", "+proj=longlat +datum=WGS84 +no_defs");
 
+
 		try {
+			// Obtener los datos de los colegios del la siguiente pagina
 			// Obtener los datos de los colegios del la siguiente pagina
 			const response = await fetch(
 				"https://datosabiertos.bogota.gov.co/dataset/d451b52f-e30c-43b3-9066-3a7816638fea/resource/4a6462ef-fa2e-4acf-96db-8521c65371e8/download/colegios_2022_09.geojson"
@@ -128,50 +120,22 @@ function maps() {
 			const data = await response.json();
 			const coordinates = [];
 			data.features.forEach((element) =>
-				coordinates.push(
-					proj4("EPSG:3857", "EPSG:4326", element.geometry.coordinates)
-				)
+				element.geometry.coordinates=proj4("EPSG:3857", "EPSG:4326", element.geometry.coordinates)
 			);
-			
-			coordinates.forEach((element) => {
-				var location = new Microsoft.Maps.Location(element[0], element[1]);
+			data.features.forEach((element) => {
+				const location = new Microsoft.Maps.Location(
+					element.geometry.coordinates[1],
+					element.geometry.coordinates[0]
+				);
+				const pin = new Microsoft.Maps.Pushpin(location);
+				map.entities.push(pin);
 				if (Microsoft.Maps.SpatialMath.Geometry.intersects(location, poly)) {
-					var pin = new Microsoft.Maps.Pushpin(location);
-					map.entities.push(pin);
 				}
 			});
-			console.log(coordinates);
 		} catch (err) {
 			console.log(err);
 		}
-		Microsoft.loadModule("Microsoft.Maps.GeoJson", function () {
-
-			var geojsonLayer = new Microsoft.Maps.Layer();
-			var geojsonUrl =
-				"https://datosabiertos.bogota.gov.co/dataset/d451b52f-e30c-43b3-9066-3a7816638fea/resource/4a6462ef-fa2e-4acf-96db-8521c65371e8/download/colegios_2022_09.geojson";
-
-			var geojsonOptions = {
-				strokeColor: "#FF0000",
-				strokeThickness: 2,
-				fillColor: "#00FF00",
-				fillOpacity: 0.5,
-			};
-
-			var geojsonDataSource = new Microsoft.Maps.GeoJsonDataSource({
-				url: geojsonUrl,
-				addSpatialIndex: true,
-			});
-
-			geojsonDataSource.importData(function () {
-				geojsonDataSource.getShapes().forEach(function (shape) {
-					if (Microsoft.Maps.SpatialMath.Geometry.intersects(shape, poly)) {
-						shape.setOptions(geojsonOptions);
-						geojsonLayer.add(shape);
-					}
-				});
-				map.entities.push(geojsonLayer);
-			});
-		});
+		
 	});
 }
 /*					
