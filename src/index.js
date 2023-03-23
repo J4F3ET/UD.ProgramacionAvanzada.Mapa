@@ -29,6 +29,6 @@ console.log(path.join(__dirname, "../node_modules/proj4"));
 app.use(express.static(path.join(__dirname + "/public")));
 
 //Configurando el puerto en donde se va ejecutar el servidor
-app.listen(PORT, SERVER, () => {
+app.listen(PORT, () => {
 	console.log(`Servidor: ${SERVER}:${PORT}`);
 });

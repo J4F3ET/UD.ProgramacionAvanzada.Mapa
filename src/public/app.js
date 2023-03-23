@@ -111,11 +111,6 @@ function maps() {
 		);
 		map.entities.push(pin);
 
-		// Definir los sistemas de referencia de origen y destino
-		const EPSG3857 =
-			"+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0 +k=1.0 +units=m +nadgrids=@null +no_defs";
-		const EPSG4326 = "+proj=longlat +datum=WGS84 +no_defs";
-
 		// Definir la proyección de EPSG:3857
 		proj4.defs(
 			"EPSG:3857",
@@ -134,7 +129,7 @@ function maps() {
 			const coordinates = [];
 			data.features.forEach((element) =>
 				coordinates.push(
-					proj4("EPSG:3857", "GOOGLE", element.geometry.coordinates)
+					proj4("EPSG:3857", "EPSG:4326", element.geometry.coordinates)
 				)
 			);
 			
@@ -149,32 +144,34 @@ function maps() {
 		} catch (err) {
 			console.log(err);
 		}
-		var geojsonLayer = new Microsoft.Maps.Layer();
+		Microsoft.loadModule("Microsoft.Maps.GeoJson", function () {
 
-		var geojsonUrl =
-			"https://datosabiertos.bogota.gov.co/dataset/d451b52f-e30c-43b3-9066-3a7816638fea/resource/4a6462ef-fa2e-4acf-96db-8521c65371e8/download/colegios_2022_09.geojson";
+			var geojsonLayer = new Microsoft.Maps.Layer();
+			var geojsonUrl =
+				"https://datosabiertos.bogota.gov.co/dataset/d451b52f-e30c-43b3-9066-3a7816638fea/resource/4a6462ef-fa2e-4acf-96db-8521c65371e8/download/colegios_2022_09.geojson";
 
-		var geojsonOptions = {
-			strokeColor: "#FF0000",
-			strokeThickness: 2,
-			fillColor: "#00FF00",
-			fillOpacity: 0.5,
-		};
+			var geojsonOptions = {
+				strokeColor: "#FF0000",
+				strokeThickness: 2,
+				fillColor: "#00FF00",
+				fillOpacity: 0.5,
+			};
 
-		var geojsonDataSource = new Microsoft.Maps.GeoJsonDataSource({
-			url: geojsonUrl,
-			addSpatialIndex: true,
-		});
+			var geojsonDataSource = new Microsoft.Maps.GeoJsonDataSource({
+				url: geojsonUrl,
+				addSpatialIndex: true,
+			});
 
-		geojsonDataSource.importData(function () {
-			geojsonDataSource.getShapes().forEach(function (shape) {
-				if (shape instanceof Microsoft.Maps.Pushpin) {
-					geojsonLayer.add(shape);
-				}
+			geojsonDataSource.importData(function () {
+				geojsonDataSource.getShapes().forEach(function (shape) {
+					if (Microsoft.Maps.SpatialMath.Geometry.intersects(shape, poly)) {
+						shape.setOptions(geojsonOptions);
+						geojsonLayer.add(shape);
+					}
+				});
+				map.entities.push(geojsonLayer);
 			});
 		});
-
-		map.layers.insert(geojsonLayer);
 	});
 }
 /*					
