@@ -1,6 +1,7 @@
 
 
 var map;
+var data;
 function updateMap(sede) {
 	const a = document.body.style.backgroundImage;
 	switch (sede) {
@@ -61,13 +62,21 @@ function updateMap(sede) {
 			GetMap(4.7078228876322425, -74.0727965182916, 11, "Bogotá");
 	}
 }
-function GetMap(cordenada1, cordenada2, acercamiento, titulo) {
+async function GetMap() {
 	var loc = (map = new Microsoft.Maps.Map("#myMap", {
 		credentials:
 			"AtzDh5axnUWYRw6zOgK5nqnd7S2C_f8Yij3gDZiRtTtmvleWFq01t5OX7YogblQi",
 		center: new Microsoft.Maps.Location(4.60971, -74.08175),
-		zoom: acercamiento,
+		zoom: 10,
 	}));
+	try {
+		response = await fetch(
+			"https://datosabiertos.bogota.gov.co/dataset/d451b52f-e30c-43b3-9066-3a7816638fea/resource/4a6462ef-fa2e-4acf-96db-8521c65371e8/download/colegios_2022_09.geojson"
+		);
+		data = await response.json();
+	} catch (err) {
+		console.log(err);
+	}
 	
 }
 function puntos() {
@@ -104,13 +113,6 @@ function maps() {
 		});
 		//agrega el poligono al mapa
 		map.entities.push(poly);
-		try {
-			// Obtener los datos de los colegios del la siguiente pagina
-			// Obtener los datos de los colegios del la siguiente pagina
-			const response = await fetch(
-				"https://datosabiertos.bogota.gov.co/dataset/d451b52f-e30c-43b3-9066-3a7816638fea/resource/4a6462ef-fa2e-4acf-96db-8521c65371e8/download/colegios_2022_09.geojson"
-			);
-			const data = await response.json();
 			const coordinates = [];
 			data.features.forEach(
 				(element) =>
@@ -131,9 +133,7 @@ function maps() {
 					document.querySelector;
 				}
 			});
-		} catch (err) {
-			console.log(err);
-		}
+			
 		map.setView({
 			zoom: 13,
 			center: new Microsoft.Maps.Location(
