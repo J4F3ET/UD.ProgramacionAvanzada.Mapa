@@ -21,6 +21,11 @@ app.use(
 	"/icons",
 	express.static(path.join(__dirname, "../node_modules/bootstrap-icons/font"))
 );
+app.use(
+	"/proj4",
+	express.static(path.join(__dirname, "../node_modules/proj4/dist"))
+);
+console.log(path.join(__dirname, "../node_modules/proj4"));
 app.use(express.static(path.join(__dirname + "/public")));
 
 //Configurando el puerto en donde se va ejecutar el servidor
