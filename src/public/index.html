@@ -11,8 +11,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.9.0/proj4.js" integrity="sha512-lO8f7sIViqr9x5VE6Q72PS6f4FoZcuh5W9YzeSyfNRJ9z/qL3bkweiwG6keGzWS0BQzNDqAWXdBhYzFD6KffIw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/javascript" src="../../node_modules/proj4/dist/proj4.js"></script>
     <script type='text/javascript' src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AtzDh5axnUWYRw6zOgK5nqnd7S2C_f8Yij3gDZiRtTtmvleWFq01t5OX7YogblQi'></script>
-    <script type="text/javascript" src="./app.js"></script>
-    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   </head>
   <body>
@@ -21,14 +19,13 @@
     </section>
     <section class="mapas container w-100">
         <div class="btn-group-horizontal-sm" role="group" aria-label="Vertical radio toggle button group">
-          <input 
+          <input
             id="TecnologicaColegios"
             data-input-colegio
-            name="sede" 
-            type="radio" 
-            onclick="maps();" 
-            class="sede btn-check">
-          <label class="mt-3 btn btn-danger" for="TecnologicaColegios">Tecnologica Colegios</label>
+            name="colegio" 
+            type="checkbox" 
+            class="colegios btn-check">
+          <label class="mt-3 btn btn-danger" for="TecnologicaColegios">Ver Colegios</label>
           <input 
             id="Tecnologica"
             data-input-sede="1"
@@ -87,8 +84,6 @@
         <div class="col-4 " >
             <ul hidden id="lista_colegios" class="list-group btn-group-vertical list-group-flush rounded">
               <li class="w-100 bg-danger list-group-item  text-light mb-2"><h2> Lista de colegios</h2></li>
-              <li class="bg-danger list-group-item  text-light mb-2"> San marina</li>
-              <li class="bg-danger list-group-item  text-light mb-2"> San marina</li>
             </ul>
         </div>
       </div>
@@ -97,6 +92,7 @@
       <p>Datos tomados de <a href="https://datosabiertos.bogota.gov.co/dataset/d451b52f-e30c-43b3-9066-3a7816638fea/resource/4a6462ef-fa2e-4acf-96db-8521c65371e8/download/colegios_2022_09.geojson"></a></p>
       <a href="https://datosabiertos.bogota.gov.co/dataset/colegios-bogota-d-c">mamahuebo</a>
     </footer>
+    <script type="text/javascript" src="./app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
   </body>
 </html>
