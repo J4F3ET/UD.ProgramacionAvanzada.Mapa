@@ -33,6 +33,26 @@ select_sede.forEach((element) => {
 			updateMap(element.dataset.inputSede);
 	});
 });
+const select_colegios = document.querySelector(".colegios");
+select_colegios.addEventListener("click", () => {
+	const icon = document.getElementById("ojos_icon");
+	var sede;
+	if(select_colegios.checked){
+		icon.classList.remove("bi-eye-slash");
+		icon.classList.add("bi-eye");
+	}else{
+		icon.classList.remove("bi-eye");
+		icon.classList.add("bi-eye-slash");
+	}
+
+	select_sede.forEach((element) => {
+		if (element.checked) {sede = element.dataset.inputSede;}
+	});
+	if(sede == undefined){return}
+	clearEntities();
+	console.log('sede check ',sede);
+	updateMap(sede);
+});
 function updateMap(eleccion) {
 	switch (eleccion) {
 		case ('1'):
@@ -110,6 +130,7 @@ function goSede(lat, lon, titulo) {
 	map.entities.push(pushpin);
 }
 function colegios(lat, lon) {
+	var tiempo_inicial = new Date().getTime();
 	Microsoft.Maps.loadModule("Microsoft.Maps.SpatialMath", () => {
 
 		var path = Microsoft.Maps.SpatialMath.getRegularPolygon(
@@ -127,60 +148,56 @@ function colegios(lat, lon) {
 
 		//agrega el poligono al mapa
 		map.entities.push(poly);
-		var num_colegios = 0;
-
-		const listaColegios = document.getElementById("lista_colegios");
-		listaColegios.removeAttribute("hidden");
+		
 		data.features.forEach((element) => {
-			var location = new Microsoft.Maps.Location(
-				element.geometry.coordinates[1],
-				element.geometry.coordinates[0]
-			);
+			if (Microsoft.Maps.SpatialMath.Geometry.intersects(
+						new Microsoft.Maps.Location(
+							element.geometry.coordinates[1],
+							element.geometry.coordinates[0]
+						), poly
+					)
+				) 
+			{
+				var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(
+								element.geometry.coordinates[1],
+								element.geometry.coordinates[0]
+							), 
+							{color: "red"}
+						);
 
-			if (Microsoft.Maps.SpatialMath.Geometry.intersects(location, poly)) {
-				var pin = new Microsoft.Maps.Pushpin(location, {color: "red"});
-
-				var infobox = new Microsoft.Maps.Infobox(location, {
-					title: element.properties.NOMBRE_EST,
-					description: element.properties.DIRECCION,
-					visible: false,
-				});
+				var infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(
+							element.geometry.coordinates[1],
+							element.geometry.coordinates[0]
+						),
+						{
+							title: element.properties.NOMBRE_EST,
+							description: element.properties.DIRECCION,
+							visible: false,
+						}
+					);
 
 				infobox.setMap(map);
 
 				Microsoft.Maps.Events.addHandler(pin, "click", function () {
 					infobox.setOptions({visible: true});
-					var li = document.createElement("li");
-					li.classList.add("list-group-item");
-					li.classList.add("bg-danger");
-					li.classList.add("text-light");
-					li.classList.add("mb-2");
-					li.innerHTML = `<p class="fs-6 fw-lighter">${element.properties.NOMBRE_EST}<br>${element.properties.DIRECCION}</p>`;
-					listaColegios.appendChild(li);
 				});
 				map.entities.push(pin);
 
-				num_colegios++;
 			}
 		});
-
-		map.setView({
-			zoom: 13,
-			center: new Microsoft.Maps.Location(lat,lon),
-			animate: true,
-		});
-		console.log(num_colegios);
 	});
-	//agrega un pushpin(punto) en la tecno
 	var pin = new Microsoft.Maps.Pushpin(
 		new Microsoft.Maps.Location(lat,lon)
 	);
 	map.entities.push(pin);
+
 	map.setView({
 		zoom: 13,
 		center: new Microsoft.Maps.Location(lat,lon),
 		animate: true
 	});
+	var tiempo_final = new Date().getTime();
+	console.log("Tiempo transcurrido: " + (tiempo_final - tiempo_inicial) + "ms");
 }
 function clearEntities() {
 	for (var i = map.entities.getLength() - 1; i >= 0; i--) {

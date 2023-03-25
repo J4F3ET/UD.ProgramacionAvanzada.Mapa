@@ -3,27 +3,13 @@ body{
     background-image: url("../img/bogota.png" );
     background-size: cover;
 }
-.titulo{
-    margin: 0;
-    padding-left: 1.5rem;
-    padding-bottom: 5px;
-}
-.mapas{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.mapas>div{
-    margin: 1rem;
-}
 #myMap {
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     width: 50vw;
-    height: 83.1vh;
+    height: 90.1vh;
 }
 footer{
     padding: 1rem;
@@ -36,4 +22,10 @@ footer{
 .listaFooter{
     margin: 0 1rem;
     list-style: none;
+}
+@media screen and (max-width: 768px){
+    #myMap {
+        width: 100vw;
+        height: 100vh;
+    }
 }
