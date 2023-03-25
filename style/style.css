@@ -32,3 +32,9 @@ footer{
         height: 79vh;
     }
 }
+@media screen and (min-height: 944px){
+    #myMap {
+        width: 100vw;
+        height: 85vh;
+    }
+}
