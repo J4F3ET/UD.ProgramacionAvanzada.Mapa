@@ -29,6 +29,12 @@ footer{
 @media screen and (max-width: 768px){
     #myMap {
         width: 100vw;
-        height: calc(100vh - 24rem);
+        height: 79vh;
+    }
+}
+@media screen and (min-height: 944px){
+    #myMap {
+        width: 100vw;
+        height: 85vh;
     }
 }
