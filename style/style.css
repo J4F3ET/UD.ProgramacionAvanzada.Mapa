@@ -3,20 +3,6 @@ body{
     background-image: url("../img/bogota.png" );
     background-size: cover;
 }
-.titulo{
-    margin: 0;
-    padding-left: 1.5rem;
-    padding-bottom: 5px;
-}
-.mapas{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.mapas>div{
-    margin: 1rem;
-}
 #myMap {
     display: flex;
     justify-content: center;

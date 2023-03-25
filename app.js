@@ -35,7 +35,16 @@ select_sede.forEach((element) => {
 });
 const select_colegios = document.querySelector(".colegios");
 select_colegios.addEventListener("click", () => {
-	var sede; 
+	const icon = document.getElementById("ojos_icon");
+	var sede;
+	if(select_colegios.checked){
+		icon.classList.remove("bi-eye-slash");
+		icon.classList.add("bi-eye");
+	}else{
+		icon.classList.remove("bi-eye");
+		icon.classList.add("bi-eye-slash");
+	}
+
 	select_sede.forEach((element) => {
 		if (element.checked) {sede = element.dataset.inputSede;}
 	});
