@@ -23,7 +23,7 @@ body{
     align-items: center;
     position: relative;
     width: 50vw;
-    height: 83.1vh;
+    height: 90.1vh;
 }
 footer{
     padding: 1rem;
@@ -36,4 +36,10 @@ footer{
 .listaFooter{
     margin: 0 1rem;
     list-style: none;
+}
+@media screen and (max-width: 768px){
+    #myMap {
+        width: 100vw;
+        height: 100vh;
+    }
 }

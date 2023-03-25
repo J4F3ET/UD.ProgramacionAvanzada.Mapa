@@ -141,23 +141,31 @@ function colegios(lat, lon) {
 		map.entities.push(poly);
 		
 		data.features.forEach((element) => {
-			if (Microsoft.Maps.SpatialMath.Geometry.intersects(new Microsoft.Maps.Location(
-				element.geometry.coordinates[1],
-				element.geometry.coordinates[0]
-			), poly)) {
+			if (Microsoft.Maps.SpatialMath.Geometry.intersects(
+						new Microsoft.Maps.Location(
+							element.geometry.coordinates[1],
+							element.geometry.coordinates[0]
+						), poly
+					)
+				) 
+			{
 				var pin = new Microsoft.Maps.Pushpin(new Microsoft.Maps.Location(
-				element.geometry.coordinates[1],
-				element.geometry.coordinates[0]
-			), {color: "red"});
+								element.geometry.coordinates[1],
+								element.geometry.coordinates[0]
+							), 
+							{color: "red"}
+						);
 
 				var infobox = new Microsoft.Maps.Infobox(new Microsoft.Maps.Location(
-				element.geometry.coordinates[1],
-				element.geometry.coordinates[0]
-			), {
-					title: element.properties.NOMBRE_EST,
-					description: element.properties.DIRECCION,
-					visible: false,
-				});
+							element.geometry.coordinates[1],
+							element.geometry.coordinates[0]
+						),
+						{
+							title: element.properties.NOMBRE_EST,
+							description: element.properties.DIRECCION,
+							visible: false,
+						}
+					);
 
 				infobox.setMap(map);
 
