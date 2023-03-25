@@ -113,9 +113,7 @@ function colegios(lat, lon) {
 		const poly = await createPolygon(lat, lon);
 		data.features.forEach((element) => {
 			var loc = new Microsoft.Maps.Location(element.geometry.coordinates[1],element.geometry.coordinates[0]);
-			if (Microsoft.Maps.SpatialMath.Geometry.intersects(loc,poly)) {
-				createPunshipInfobox(loc,element.properties.NOMBRE,element.properties.DIRECCION);
-			}
+			Microsoft.Maps.SpatialMath.Geometry.intersects(loc,poly)?createPunshipInfobox(loc,element.properties.NOMBRE_EST,element.properties.DIRECCION):null;
 		});
 	});
 	var pin = new Microsoft.Maps.Pushpin(
